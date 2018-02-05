@@ -9,14 +9,19 @@ var config = {
 };
 firebase.initializeApp(config);
 
+// Initialize global variable
+var userLatitude; 
+var userLongitude; 
+var weatherFromCoordinates;
+var weatherSearchString;
+var userCity = "";
+var userZip = "";
+
 // Running on page load
 getLocation();
 
 // Get location data ----------------------------
-var userLatitude; // Initialize global variable
-var userLongitude; // Initialize global variable
-var weatherFromCoordinates;
-var weatherSearchString;
+
 function getLocation() {
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
@@ -60,7 +65,31 @@ $.ajax({
 }); // End ajax
 } // End getWeather
 
-// Button event for name and/or laction
-$("#submit-button").on("click", function() {
+// Button event for name and/or location
+$("#submit-button").on("click", function(event) {
+  event.preventDefault();
   console.log(this);
+
+    // Test for username input
+  var usernameInput = $("username-input").val().trim();
+  if (usernameInput === "") {
+    alert("You must enter your name");
+  } 
+  // Test for user location input
+  var userCity = $("#location-input").val().trim();
+  var userZip = $("#location-input").val().trim();
+  if ((userCity === "") && (userZip === "")) {
+    
+  }; 
+  
+  if (userZip !== ""){
+    weatherSearchString = "?zip=" + $("#city-location").val().trim();
+    
+    
+  };
+
+
+  getWeather();
+
 });
+
