@@ -6,19 +6,50 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+
     <link rel="stylesheet" href="assets/css/style.css">
+
     <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <script
         src="http://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous">
     </script>
     <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="assets/js/app.js"></script>
 
     <title>AudioSuace</title>
 </head>
 <body>
+    <section class="header">
+        <div class="col s12 m6">
+            <h1 id="header-text">Witty Team App</h1>
+        </div>
+    </section>
+    <div class="information-input">
+            <form>
+              <div>
+                <label for="username-input">Username</label>
+                    <br>
+                <input class="z-depth-5" type="text" id="username-input" aria-describedby="emailHelp" placeholder="Enter your username.">
+                    <br>
+                <small id="emailHelp" class="form-text text-muted"></small>
+              </div>
+              <div id="location-input-containter">
+                <label for="location-input">Location</label>
+                    <br>
+                <input class="z-depth-5" type="search" id="location-input" placeholder="Enter your current location.">
+              </div>
+              <div>
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              </div>
+                <br>
+              <button id="submit-button ype="submit" class="btn btn-primary">GO!</button>
+            </form>
+        </div>
+    </div>
     
 </body>
 </html>
