@@ -9,16 +9,23 @@ var config = {
 };
 firebase.initializeApp(config);
 
+// Variable for Firebase
+var database = firebase.database();
+
 // Initialize global variable
+var geolocationAllowed = false;
 var userLatitude; 
 var userLongitude; 
 var weatherFromCoordinates;
 var weatherSearchString;
 var userCity = "";
 var userZipcode = "";
+var cityName; // Retrieved from API
 
 // Running on page load
-getLocation();
+$(document).ready(function(){
+  getLocation();
+});
 
 // Get location data ----------------------------
 
@@ -34,6 +41,8 @@ function getLocation() {
 function geoSuccess(position) {
   userLatitude = position.coords.latitude;
   userLongitude = position.coords.longitude;
+  geolocationAllowed = true;
+  $("#location-input-container").hide();
   console.log("Latitude: " + userLatitude + " Longitude: " + userLongitude);
   weatherSearchString = "?lat=" + userLatitude + "&lon=" + userLongitude;
   getWeather();
@@ -43,12 +52,12 @@ function geoSuccess(position) {
 function geoError() {
   // If location access is denied
   $("#location-input-container").show();
-  alert("Geocoder failed.");
+  // alert("Geocoder failed.");
 }
 // End location --------------------------------------------
 
 
-// Wrapper for API call
+// Wrapper for API call --------------------------------------------
 function getWeather() {
 // Setup for weather API call
 var weatherAPIKey = "&APPID=4aa09d0ed51ac90ebeb79c63e62ba521";
@@ -62,10 +71,12 @@ $.ajax({
   method: "GET"
 }).then(function(response) {
   console.log(response);
+  cityName = response.name;
+  $("#city-name").text(cityName);
 }); // End ajax
-} // End getWeather
+} // End getWeather ------------------------------------------------------
 
-// Button event for name and/or location
+// Button event for name and/or location ---------------------------
 $("#submit-button").on("click", function(event) {
   event.preventDefault();
   // Test for username input
@@ -76,23 +87,53 @@ $("#submit-button").on("click", function(event) {
     alert("You must enter your name.");
     return;
   } 
-  // Test for user location input
-  userCity = $("#city-input").val().trim();
-  userZipcode = $("#zipcode-input").val().trim();
 
-  if ((userCity !== "") || (userZipcode !== "")) {
-    if (userZipcode !== ""){
-      weatherSearchString = "?zip=" + $("#zipcode-input").val().trim();
+  if (!geolocationAllowed) {
+    // Test for user location input
+    userCity = $("#city-input").val().trim();
+    userZipcode = $("#zipcode-input").val().trim();
+    if ((userCity !== "") || (userZipcode !== "")) {
+      if (userZipcode !== ""){
+        weatherSearchString = "?zip=" + $("#zipcode-input").val().trim();
+      } else {
+        weatherSearchString = "?q=" + $("#city-input").val().trim();
+      }
     } else {
-      weatherSearchString = "?q=" + $("#city-input").val().trim();
+      $("#city-input").addClass("error");
+      $("#zipcode-input").addClass("error");
+      alert("You must enter a location.");
+      return;
     }
-  } else {
-    $("#city-input").addClass("error");
-    $("#zipcode-input").addClass("error");
-    alert("You must enter a location.");
-    return;
   }
+  // Successfull! close opening screen and get weather
   $(".information-input").addClass("scale-out");
   getWeather();
+}); // End submit ----------------------------------------------------------------
 
+// Display messages
+function displayMessages(messages) {
+  $("#messages").text(message);
+}
+
+// Check database and display comments
+database.ref().on("value", function(dataSnapshot) {
+  var username = dataSnapshot.user.val();
+  var comment = dataSnapshot.comment.val(); 
+  console.log(username);
+  var commentDiv = $("<div>");
+  var commentParagraph = $("<p>" + username + ": " + comment + "</p>");
+  commentDiv.append(commentParagraph);
+  // $("#comment-container").prepend(commentDiv);
+})
+
+// Submit comment
+$("#submit-comment").on("click", function(event) {
+  event.preventDefault();
+  database.ref().push({
+    username: usernameInput,
+    comment: userComment
+  })
+}, function(errorObject) {
+  console.log("The read failed: " + errorObject.code);
 });
+
