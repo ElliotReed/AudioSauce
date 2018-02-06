@@ -69,11 +69,12 @@ $.ajax({
 $("#submit-button").on("click", function(event) {
   event.preventDefault();
   // Test for username input
-  var usernameInput = $("username-input").val().trim();
+  var usernameInput = $("#username-input").val().trim();
 
   if (usernameInput === "") {
     $("#username-input").addClass("error");
-    alert("You must enter your name");
+    alert("You must enter your name.");
+    return;
   } 
   // Test for user location input
   userCity = $("#city-input").val().trim();
@@ -83,32 +84,15 @@ $("#submit-button").on("click", function(event) {
     if (userZipcode !== ""){
       weatherSearchString = "?zip=" + $("#zipcode-input").val().trim();
     } else {
-      weatherSearchString = "?q=" + $("#city-location").val().trim();
+      weatherSearchString = "?q=" + $("#city-input").val().trim();
     }
   } else {
     $("#city-input").addClass("error");
     $("#zipcode-input").addClass("error");
     alert("You must enter a location.");
+    return;
   }
   $(".information-input").addClass("scale-out");
   getWeather();
 
 });
-
-// $("#submit-button").on("click", function() {
-//   userName = $("#username-input").val().trim();
-//   userLocation = $("#city-input").val().trim();
-//   console.log(this);
-//   if (userName == "" || userLocation == "") {
-//     alert("Please enter the required information.");
-//     $("#username-input", "#city-input").removeClass("error");
-//     if (userLocation == "") {
-//       $("#city-input").addClass("error");
-//     }
-//     if (userName == "") {
-//       $("#username-input").addClass("error");
-//     }
-//   } else {
-//   $(".information-input").addClass("scale-out");
-//   }
-//  });
