@@ -15,7 +15,7 @@ var userLongitude;
 var weatherFromCoordinates;
 var weatherSearchString;
 var userCity = "";
-var userZip = "";
+var userZipcode = "";
 
 // Running on page load
 getLocation();
@@ -68,28 +68,47 @@ $.ajax({
 // Button event for name and/or location
 $("#submit-button").on("click", function(event) {
   event.preventDefault();
-  console.log(this);
-
-    // Test for username input
+  // Test for username input
   var usernameInput = $("username-input").val().trim();
+
   if (usernameInput === "") {
+    $("#username-input").addClass("error");
     alert("You must enter your name");
   } 
   // Test for user location input
-  var userCity = $("#location-input").val().trim();
-  var userZip = $("#location-input").val().trim();
-  if ((userCity === "") && (userZip === "")) {
-    
-  }; 
-  
-  if (userZip !== ""){
-    weatherSearchString = "?zip=" + $("#city-location").val().trim();
-    
-    
-  };
+  var userCity = $("#city-input").val().trim();
+  var userZipcode = $("#zipcode-input").val().trim();
 
-
+  if ((userCity !== "") || (userZipcode !== "")) {
+    if (userZipcode !== ""){
+      weatherSearchString = "?zip=" + $("#zipcode-input").val().trim();
+    } else {
+      weatherSearchString = "?q=" + $("#city-location").val().trim();
+    }
+  } else {
+    $("#city-input").addClass("error");
+    $("#zipcode-input").addClass("error");
+    alert("You must enter a location.");
+  }
+  $(".information-input").addClass("scale-out");
   getWeather();
 
 });
 
+// $("#submit-button").on("click", function() {
+//   userName = $("#username-input").val().trim();
+//   userLocation = $("#city-input").val().trim();
+//   console.log(this);
+//   if (userName == "" || userLocation == "") {
+//     alert("Please enter the required information.");
+//     $("#username-input", "#city-input").removeClass("error");
+//     if (userLocation == "") {
+//       $("#city-input").addClass("error");
+//     }
+//     if (userName == "") {
+//       $("#username-input").addClass("error");
+//     }
+//   } else {
+//   $(".information-input").addClass("scale-out");
+//   }
+//  });
