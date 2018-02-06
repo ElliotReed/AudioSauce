@@ -59,8 +59,3 @@ $.ajax({
   console.log(response);
 }); // End ajax
 } // End getWeather
-
-// Button event for name and/or laction
-$("#submit-button").on("click", function() {
-  console.log(this);
-});
