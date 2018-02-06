@@ -13,6 +13,7 @@ firebase.initializeApp(config);
 var database = firebase.database();
 
 // Initialize global variable
+var weatherCondition;
 var geolocationAllowed = false;
 var userLatitude; 
 var userLongitude; 
@@ -62,7 +63,6 @@ function getWeather() {
 // Setup for weather API call
 var weatherAPIKey = "&APPID=4aa09d0ed51ac90ebeb79c63e62ba521";
 var weatherSiteString = "http://api.openweathermap.org/data/2.5/weather";
-
 var weatherQueryURL = weatherSiteString + weatherSearchString + weatherAPIKey;
 
 // Weather API call
@@ -70,9 +70,14 @@ $.ajax({
   url: weatherQueryURL,
   method: "GET"
 }).then(function(response) {
-  console.log(response);
+  // console.log(response);
   cityName = response.name;
   $("#city-name").text(cityName);
+  weatherCondition = response.weather[0].main;
+  var weatherDescription = response.weather[0].description;
+  getBackgroundImage(weatherDescription);
+  // console.log(weatherDescription);
+
 }); // End ajax
 } // End getWeather ------------------------------------------------------
 
@@ -137,3 +142,21 @@ $("#submit-comment").on("click", function(event) {
   console.log("The read failed: " + errorObject.code);
 });
 
+// Wrapper for the Giphy call
+function getBackgroundImage(weatherDescription) {
+ // Create query request
+ var giphyAPIKey = "&api_key=aPXKMDgpfICV4wcHOcnFcWS0Tqgr0w8C";
+ var giphySiteString = "https://api.giphy.com/v1/gifs/";
+ var giphySearchString = "search?q=weather+evening" + weatherDescription;
+ var giphyLimit = "&limit=1";
+ var giphyQueryURL = giphySiteString + giphySearchString + giphyAPIKey + giphyLimit; 
+
+ $.ajax({
+   url: giphyQueryURL,
+   method: "GET"
+ }).then(function(response) {
+    console.log(response.data[0].images.original.url);
+    var htmlBackground = "url(" + response.data[0].images.original.url + ") no-repeat center center fixed";
+    $("html").css({background : htmlBackground});
+ })
+}
