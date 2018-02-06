@@ -9,14 +9,19 @@ var config = {
 };
 firebase.initializeApp(config);
 
+// Initialize global variable
+var userLatitude; 
+var userLongitude; 
+var weatherFromCoordinates;
+var weatherSearchString;
+var userCity = "";
+var userZipcode = "";
+
 // Running on page load
 getLocation();
 
 // Get location data ----------------------------
-var userLatitude; // Initialize global variable
-var userLongitude; // Initialize global variable
-var weatherFromCoordinates;
-var weatherSearchString;
+
 function getLocation() {
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
@@ -59,3 +64,35 @@ $.ajax({
   console.log(response);
 }); // End ajax
 } // End getWeather
+
+// Button event for name and/or location
+$("#submit-button").on("click", function(event) {
+  event.preventDefault();
+  // Test for username input
+  var usernameInput = $("#username-input").val().trim();
+
+  if (usernameInput === "") {
+    $("#username-input").addClass("error");
+    alert("You must enter your name.");
+    return;
+  } 
+  // Test for user location input
+  userCity = $("#city-input").val().trim();
+  userZipcode = $("#zipcode-input").val().trim();
+
+  if ((userCity !== "") || (userZipcode !== "")) {
+    if (userZipcode !== ""){
+      weatherSearchString = "?zip=" + $("#zipcode-input").val().trim();
+    } else {
+      weatherSearchString = "?q=" + $("#city-input").val().trim();
+    }
+  } else {
+    $("#city-input").addClass("error");
+    $("#zipcode-input").addClass("error");
+    alert("You must enter a location.");
+    return;
+  }
+  $(".information-input").addClass("scale-out");
+  getWeather();
+
+});
