@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Head icon -->
+    <link rel="icon" type="image/png" href="assets/images/AudioSauce.png">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
@@ -17,39 +19,50 @@
         crossorigin="anonymous">
     </script>
     <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-    <script src="assets/js/app.js"></script>
 
-    <title>AudioSuace</title>
+    <title>AudioSauce</title>
 </head>
 <body>
     <section class="header">
         <div class="col s12 m6">
-            <h1 id="header-text">Witty Team App</h1>
+            <img id="logo" src="assets/images/AudioSauceWhite.png" height=25% width=25%>
+        </div>
+        <div>
+            <p>
+
+            </p>
         </div>
     </section>
-    <div class="information-input">
+        <div class="information-input scale-transition">
+           <!--  <a id="scale-demo" href="#submit-button" class="scale-transition scale-out">
+            <i class="material-icons" style='color: red;'>TEST</i>
+            </a> -->
             <form>
-              <div>
-                <label for="username-input">Username</label>
-                    <br>
-                <input class="z-depth-5" type="text" id="username-input" aria-describedby="emailHelp" placeholder="Enter your username.">
-                    <br>
-                <small id="emailHelp" class="form-text text-muted"></small>
-              </div>
-              <div id="location-input-containter">
-                <label for="location-input">Location</label>
-                    <br>
-                <input class="z-depth-5" type="search" id="location-input" placeholder="Enter your current location.">
-              </div>
-              <div>
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-              </div>
+                <div>
+                    <label id="username-text" for="username-input">Username</label>
+                        <br>
+                    <input type="text" id="username-input" aria-describedby="emailHelp" placeholder=". . .">
+                        <br>
+                </div>
+                <div id="location-input-container">
+                    <label id="city-text" for="city-input">City</label>
+                        <br>
+                    <input type="search" id="city-input" placeholder=". . .">
+                </div>
+                <p id="or-text">
+                    – Or –
+                </p>
+                <div>
+                    <label for="zipcode-input">Zip Code</label>
+                        <br>
+                    <input type="search" id="zipcode-input" placeholder=". . .">
+                </div>
                 <br>
-              <button id="submit-button ype="submit" class="btn btn-primary">GO!</button>
+              <button id="submit-button" type="submit" class="btn btn-primary">GO!</button>
             </form>
         </div>
-    </div>
-    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="assets/js/app.js"></script>
 </body>
 </html>
