@@ -76,8 +76,8 @@ $("#submit-button").on("click", function(event) {
     alert("You must enter your name");
   } 
   // Test for user location input
-  var userCity = $("#city-input").val().trim();
-  var userZipcode = $("#zipcode-input").val().trim();
+  userCity = $("#city-input").val().trim();
+  userZipcode = $("#zipcode-input").val().trim();
 
   if ((userCity !== "") || (userZipcode !== "")) {
     if (userZipcode !== ""){
