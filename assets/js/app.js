@@ -69,7 +69,7 @@ function geoError() {
 function getWeather() {
 // Setup for weather API call
 var weatherAPIKey = "&APPID=4aa09d0ed51ac90ebeb79c63e62ba521";
-var weatherSiteString = "http://api.openweathermap.org/data/2.5/weather";
+var weatherSiteString = "https://api.openweathermap.org/data/2.5/weather";
 var weatherQueryURL = weatherSiteString + weatherSearchString + weatherAPIKey;
 
 // Weather API call
@@ -77,7 +77,7 @@ $.ajax({
   url: weatherQueryURL,
   method: "GET"
 }).then(function(response) {
-  // console.log(response);
+  console.log(response);
   cityName = response.name; 
   $("#city-name").text(cityName);
   weatherCondition = response.weather[0].main;
