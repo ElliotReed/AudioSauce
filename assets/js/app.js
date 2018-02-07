@@ -159,10 +159,10 @@ function pickMedia(weatherCondition) {
       backgroundImage = "https://media.giphy.com/media/Xi2Xu0MejhsUo/giphy.gif";
       break;
     case "Clear":
-      backgroundImage = "https://media.giphy.com/media/ivcVZnZAEqhs4/giphy.gif";
+      backgroundImage = "http://78.media.tumblr.com/tumblr_m6ltvk2pHg1r9bkeao1_500.gif";
       break;
     case "Clouds":
-      backgroundImage = "https://media.giphy.com/media/zf8ngmu7kp77q/giphy.gif";
+      backgroundImage = "https://media.giphy.com/media/qq5gwamAHVofm/giphy.gif";
       break;
     case "Extreme":
       backgroundImage = "https://media.giphy.com/media/QksV5jdMsPYK4/giphy.gif";
