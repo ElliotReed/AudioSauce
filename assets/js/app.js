@@ -4,7 +4,7 @@ var config = {
   authDomain: "audiosauce-6eb52.firebaseapp.com",
   databaseURL: "https://audiosauce-6eb52.firebaseio.com",
   projectId: "audiosauce-6eb52",
-  storageBucket: "",
+  storageBucket: "audiosauce-6eb52.appspot.com",
   messagingSenderId: "266026610182"
 };
 firebase.initializeApp(config);
@@ -13,6 +13,9 @@ firebase.initializeApp(config);
 var database = firebase.database();
 
 // Initialize global variable
+var currentMoment;
+var usernameInput;
+var userComment;
 var weatherCondition;
 var geolocationAllowed = false;
 var userLatitude; 
@@ -69,7 +72,7 @@ $.ajax({
   method: "GET"
 }).then(function(response) {
   // console.log(response);
-  cityName = response.name;
+  cityName = response.name; 
   $("#city-name").text(cityName);
   weatherCondition = response.weather[0].main;
   pickMedia(weatherCondition);
@@ -80,7 +83,7 @@ $.ajax({
 $("#submit-button").on("click", function(event) {
   event.preventDefault();
   // Test for username input
-  var usernameInput = $("#username-input").val().trim();
+  usernameInput = $("#username-input").val().trim();
 
   if (usernameInput === "") {
     $("#username-input").addClass("error");
@@ -112,7 +115,9 @@ $("#submit-button").on("click", function(event) {
   // Successfull! close opening screen and get weather
   $(".information-input").addClass("scale-out");
   getWeather();
-
+  // Show the chat
+  $("#social-icon-button").show();
+  $("#world-icon-button").show();
 }); // End submit ----------------------------------------------------------------
 
 // Display messages
@@ -121,25 +126,31 @@ function displayMessages(messages) {
 }
 
 // Check database and display comments -----------------------------------------
-database.ref().on("value", function(dataSnapshot) {
-  var username = dataSnapshot.user.val();
-  var comment = dataSnapshot.comment.val(); 
-  console.log(username);
+database.ref().on("child_added", function(dataSnapshot) {
+  var username = dataSnapshot.val().username;
+  var comment = dataSnapshot.val().comment; 
+  console.log("User: " + username);
   var commentDiv = $("<div>");
   var commentParagraph = $("<p>" + username + ": " + comment + "</p>");
   commentDiv.append(commentParagraph);
-  // $("#comment-container").prepend(commentDiv);
+  $(".chatroom-drop").prepend(commentDiv);
 }); //End display comments --------------------------------------------------
 
 // Submit comment -------------------------------------------------------------
-$("#submit-comment").on("click", function(event) {
+$("#send-chat-button").on("click", function(event) {
   event.preventDefault();
+  userComment = $("#chatroom-textbox").val().trim();
+  currentMoment = moment();
+  console.log("Comment: " + userComment + " City: " + cityName + " User: " + usernameInput);
+  $("#chatroom-textbox").val("");
   database.ref().push({
     username: usernameInput,
-    comment: userComment
+    comment: userComment,
+    location: cityName,
+    // commentTime: currentMoment
   });
-}, function(errorObject) {
-  console.log("The read failed: " + errorObject.code);
+// }, function(errorObject) {
+//   console.log("The read failed: " + errorObject.code);
 }); // End submit comment -----------------------------------------------------
 
 // Function to set media to weather condition --------------------------------------
