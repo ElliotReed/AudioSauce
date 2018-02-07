@@ -90,7 +90,7 @@ $("#submit-button").on("click", function(event) {
   if (usernameInput === "") {
     $("#username-input").addClass("error");
     // Materialize.toast(message, displayLength, className, completeCallback);
-    Materialize.toast('You must enter your name.', 4000) // 4000 is the duration of the toast
+    Materialize.toast('You must enter your name.', 4000); // 4000 is the duration of the toast
     return;
   } 
 
@@ -108,15 +108,16 @@ $("#submit-button").on("click", function(event) {
       $("#city-input").addClass("error");
       $("#zipcode-input").addClass("error");
       alert("You must enter a location.");
-          // Materialize.toast(message, displayLength, className, completeCallback);
-    Materialize.toast('You must enter your location.', 100000) // 4000 is the duration of the toast
+      // Materialize.toast(message, displayLength, className, completeCallback);
+      Materialize.toast('You must enter your location.', 100000); // 4000 is the duration of the toast
       return;
     }
   }
-  // Successfull! close opening screen and get weather
 
+  // Successfull! close opening screen and get weather
   $(".information-input").addClass("scale-out");
   getWeather();
+
 }); // End submit ----------------------------------------------------------------
 
 // Display messages
@@ -133,7 +134,7 @@ database.ref().on("value", function(dataSnapshot) {
   var commentParagraph = $("<p>" + username + ": " + comment + "</p>");
   commentDiv.append(commentParagraph);
   // $("#comment-container").prepend(commentDiv);
-})
+});
 
 // Submit comment
 $("#submit-comment").on("click", function(event) {
@@ -141,7 +142,7 @@ $("#submit-comment").on("click", function(event) {
   database.ref().push({
     username: usernameInput,
     comment: userComment
-  })
+  });
 }, function(errorObject) {
   console.log("The read failed: " + errorObject.code);
 });
@@ -162,5 +163,5 @@ function getBackgroundImage(weatherDescription) {
     console.log(response.data[0].images.original.url);
     var htmlBackground = "url(" + response.data[0].images.original.url + ") no-repeat center center fixed";
     $("html").css({background : htmlBackground});
- })
+ });
 }
