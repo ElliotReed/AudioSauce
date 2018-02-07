@@ -75,7 +75,7 @@ $.ajax({
   $("#city-name").text(cityName);
   weatherCondition = response.weather[0].main;
   var weatherDescription = response.weather[0].description;
-  getBackgroundImage(weatherDescription);
+  pickMedia(weatherCondition);
   // console.log(weatherDescription);
 
 }); // End ajax
@@ -165,3 +165,48 @@ function getBackgroundImage(weatherDescription) {
     $("html").css({background : htmlBackground});
  });
 }
+
+// Switch to set media to weather condition
+function pickMedia(weatherCondition) {
+  weatherCondition = "Atmosphere";
+  var backgroundImage;
+  switch (weatherCondition) {
+    case "Thunderstorm":
+      backgroundImage = "https://media.giphy.com/media/CIYF0RVOmd2qQ/giphy.gif";
+      break;
+    case "Rain":
+      backgroundImage = "https://media.giphy.com/media/Il9f7ZhytEiI0/giphy.gif";
+      break;
+    case "Snow":
+      backgroundImage = "https://media.giphy.com/media/Xi2Xu0MejhsUo/giphy.gif";
+      break;
+    case "Clear":
+      backgroundImage = "https://media.giphy.com/media/ivcVZnZAEqhs4/giphy.gif";
+      break;
+    case "Clouds":
+      backgroundImage = "https://media.giphy.com/media/zf8ngmu7kp77q/giphy.gif";
+      break;
+    case "Extreme":
+      backgroundImage = "https://media.giphy.com/media/QksV5jdMsPYK4/giphy.gif";
+      break;
+    case "Drizzle":
+      backgroundImage = "https://media.giphy.com/media/QPsEnRasf0Vfa/giphy.gif";
+      break;  
+    case "Additional":
+      backgroundImage = "https://media.giphy.com/media/tMf9OezQLRxRu/giphy.gif";
+      break; 
+    case "Atmosphere":
+      backgroundImage = "https://media.giphy.com/media/McDhCoTyRyLiE/giphy.gif";
+      break; 
+    }
+  // console.log(backgroundImage);
+  var htmlBackground = "url(" + backgroundImage + ") no-repeat center center fixed";
+  $("html").css({
+    "background" : htmlBackground,
+    "-webkit-background-size": "cover",
+    "-moz-background-size": "cover",
+    "-o-background-size": "cover",
+    "background-size": "cover"
+  });
+}
+
