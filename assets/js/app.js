@@ -17,7 +17,6 @@ var weatherCondition;
 var geolocationAllowed = false;
 var userLatitude; 
 var userLongitude; 
-var weatherFromCoordinates;
 var weatherSearchString;
 var userCity = "";
 var userZipcode = "";
@@ -29,7 +28,6 @@ $(document).ready(function(){
 });
 
 // Get location data ----------------------------
-
 function getLocation() {
   if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
@@ -74,10 +72,7 @@ $.ajax({
   cityName = response.name;
   $("#city-name").text(cityName);
   weatherCondition = response.weather[0].main;
-  var weatherDescription = response.weather[0].description;
   pickMedia(weatherCondition);
-  // console.log(weatherDescription);
-
 }); // End ajax
 } // End getWeather ------------------------------------------------------
 
@@ -125,7 +120,7 @@ function displayMessages(messages) {
   $("#messages").text(message);
 }
 
-// Check database and display comments
+// Check database and display comments -----------------------------------------
 database.ref().on("value", function(dataSnapshot) {
   var username = dataSnapshot.user.val();
   var comment = dataSnapshot.comment.val(); 
@@ -134,9 +129,9 @@ database.ref().on("value", function(dataSnapshot) {
   var commentParagraph = $("<p>" + username + ": " + comment + "</p>");
   commentDiv.append(commentParagraph);
   // $("#comment-container").prepend(commentDiv);
-});
+}); //End display comments --------------------------------------------------
 
-// Submit comment
+// Submit comment -------------------------------------------------------------
 $("#submit-comment").on("click", function(event) {
   event.preventDefault();
   database.ref().push({
@@ -145,31 +140,14 @@ $("#submit-comment").on("click", function(event) {
   });
 }, function(errorObject) {
   console.log("The read failed: " + errorObject.code);
-});
+}); // End submit comment -----------------------------------------------------
 
-// Wrapper for the Giphy call
-function getBackgroundImage(weatherDescription) {
- // Create query request
- var giphyAPIKey = "&api_key=aPXKMDgpfICV4wcHOcnFcWS0Tqgr0w8C";
- var giphySiteString = "https://api.giphy.com/v1/gifs/";
- var giphySearchString = "search?q=weather+evening" + weatherDescription;
- var giphyLimit = "&limit=1";
- var giphyQueryURL = giphySiteString + giphySearchString + giphyAPIKey + giphyLimit; 
-
- $.ajax({
-   url: giphyQueryURL,
-   method: "GET"
- }).then(function(response) {
-    console.log(response.data[0].images.original.url);
-    var htmlBackground = "url(" + response.data[0].images.original.url + ") no-repeat center center fixed";
-    $("html").css({background : htmlBackground});
- });
-}
-
-// Switch to set media to weather condition
+// Function to set media to weather condition --------------------------------------
 function pickMedia(weatherCondition) {
-  weatherCondition = "Atmosphere";
+  // Variable for the image
   var backgroundImage;
+
+  // Switch to choose the right image based on weather
   switch (weatherCondition) {
     case "Thunderstorm":
       backgroundImage = "https://media.giphy.com/media/CIYF0RVOmd2qQ/giphy.gif";
@@ -199,7 +177,8 @@ function pickMedia(weatherCondition) {
       backgroundImage = "https://media.giphy.com/media/McDhCoTyRyLiE/giphy.gif";
       break; 
     }
-  // console.log(backgroundImage);
+
+  // Set the background image
   var htmlBackground = "url(" + backgroundImage + ") no-repeat center center fixed";
   $("html").css({
     "background" : htmlBackground,
@@ -208,5 +187,5 @@ function pickMedia(weatherCondition) {
     "-o-background-size": "cover",
     "background-size": "cover"
   });
-}
+} // End pickMedia -----------------------------------------------------------------
 
