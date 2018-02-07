@@ -18,16 +18,22 @@ var usernameInput;
 var userComment;
 var weatherCondition;
 var geolocationAllowed = false;
-var userLatitude; 
-var userLongitude; 
+var userLatitude;
+var userLongitude;
 var weatherSearchString;
 var userCity = "";
 var userZipcode = "";
 var cityName; // Retrieved from API
+var queryParams = parseQueryString(window.location.search.substr(1));
+var spotifyAccessToken = queryParams.access_token;
 
 // Running on page load
 $(document).ready(function(){
-  getLocation();
+  if (!spotifyAccessToken) {
+    window.location = "https://polar-headland-83144.herokuapp.com/login";
+  } else {
+    getLocation();
+  }
 });
 
 // Get location data ----------------------------
@@ -90,7 +96,7 @@ $("#submit-button").on("click", function(event) {
     // Materialize.toast(message, displayLength, className, completeCallback);
     Materialize.toast('You must enter your name.', 4000); // 4000 is the duration of the toast
     return;
-  } 
+  }
 
   if (!geolocationAllowed) {
     // Test for user location input
@@ -126,10 +132,12 @@ function displayMessages(messages) {
 }
 
 // Check database and display comments -----------------------------------------
+
 database.ref().on("child_added", function(dataSnapshot) {
   var username = dataSnapshot.val().username;
   var comment = dataSnapshot.val().comment; 
   console.log("User: " + username);
+
   var commentDiv = $("<div>");
   var commentParagraph = $("<p>" + username + ": " + comment + "</p>");
   commentDiv.append(commentParagraph);
@@ -180,13 +188,13 @@ function pickMedia(weatherCondition) {
       break;
     case "Drizzle":
       backgroundImage = "https://media.giphy.com/media/QPsEnRasf0Vfa/giphy.gif";
-      break;  
+      break;
     case "Additional":
       backgroundImage = "https://media.giphy.com/media/tMf9OezQLRxRu/giphy.gif";
-      break; 
+      break;
     case "Atmosphere":
       backgroundImage = "https://media.giphy.com/media/McDhCoTyRyLiE/giphy.gif";
-      break; 
+      break;
     }
 
   // Set the background image
@@ -200,3 +208,15 @@ function pickMedia(weatherCondition) {
   });
 } // End pickMedia -----------------------------------------------------------------
 
+
+function parseQueryString( queryString ) {
+    var params = {}, queries, temp, i, l;
+    // Split into key/value pairs
+    queries = queryString.split("&");
+    // Convert the array of strings into an object
+    for ( i = 0, l = queries.length; i < l; i++ ) {
+        temp = queries[i].split('=');
+        params[temp[0]] = temp[1];
+    }
+    return params;
+};
