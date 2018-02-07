@@ -21,7 +21,7 @@ var weatherSearchString;
 var userCity = "";
 var userZipcode = "";
 var cityName; // Retrieved from API
-var queryParams = parseQueryString(window.location.href);
+var queryParams = parseQueryString(window.location.search.substr(1));
 var spotifyAccessToken = queryParams.access_token;
 
 // Running on page load
