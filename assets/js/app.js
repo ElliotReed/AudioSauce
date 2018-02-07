@@ -73,7 +73,8 @@ $("#submit-button").on("click", function(event) {
 
   if (usernameInput === "") {
     $("#username-input").addClass("error");
-    alert("You must enter your name.");
+    // Materialize.toast(message, displayLength, className, completeCallback);
+    Materialize.toast('You must enter your name.', 4000) // 4000 is the duration of the toast
     return;
   } 
   // Test for user location input
@@ -89,9 +90,16 @@ $("#submit-button").on("click", function(event) {
   } else {
     $("#city-input").addClass("error");
     $("#zipcode-input").addClass("error");
-    alert("You must enter a location.");
+    // Materialize.toast(message, displayLength, className, completeCallback);
+    Materialize.toast('You must enter your location.', 100000) // 4000 is the duration of the toast
     return;
   }
+
+  if ((usernameInput == "") && (userZipcode == "") && (userCity == "")) {
+     // Materialize.toast(message, displayLength, className, completeCallback);
+    Materialize.toast('You must enter your name and location.', 100000) // 4000 is the duration of the toast
+  }
+
   $(".information-input").addClass("scale-out");
   getWeather();
 
