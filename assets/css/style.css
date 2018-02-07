@@ -66,6 +66,20 @@ form {
     border-width: 1px;
 }
 
+.music-box {
+	display: none;
+	background-color: #2b2b2b;
+    height: auto;
+    max-width: 60%;
+    margin: auto;
+    border-radius: 2px;
+	-moz-box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.60), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.60), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.60), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    border: solid;
+    border-width: 1px;
+}
+
 #username-input {
 	margin: auto;
 	max-width: 80%;
@@ -157,7 +171,7 @@ form {
 .chat-panel {
 	background-color: #2b2b2b;
     height: auto;
-    max-width: 60%;
+    max-width: 95%;
     margin: auto;
     border-radius: 2px;
 	-moz-box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.60), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
@@ -166,11 +180,65 @@ form {
     border: solid;
     border-width: 1px;
     text-align: left;
-    padding: 2.5%;
+    padding: 1%;
+    z-index: 1000;
+    margin-top: 50px;
+}
+
+.weather-panel {
+	background-color: #2b2b2b;
+    height: auto;
+    max-width: 95%;
+    margin: auto;
+    border-radius: 2px;
+	-moz-box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.60), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.60), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.60), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    border: solid;
+    border-width: 1px;
+    text-align: left;
+    padding: 1%;
+    z-index: 1000;
+    margin-top: 50px;
 }
 
 #chat-welcome-text {
 	margin: 0;
+	color: white;
+}
+
+.uk-button-default {
+	color: white;
+	position: fixed;
+    left: 0;
+	border: none;
+	margin-top: 15px;
+	padding: 0px;
+	padding-left: 15px;
+}
+
+#social-icon-button {
+	display: none;
+}
+
+#world-icon-button {
+	display: none;
+	color: white;
+	position: fixed;
+    right: 0;
+	border: none;
+	padding: 0px;
+	padding-right: 15px;
+}
+
+.uk-offcanvas-bar {
+	padding: 20px;
+	width: 550px;
+	background: #444;
+	background-color: #444;
+	-moz-box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.60), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.60), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.60), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
 }
 
 .user-chat {
