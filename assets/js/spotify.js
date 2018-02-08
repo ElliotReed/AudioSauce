@@ -16,7 +16,11 @@
       // Playback status updates
       player.on('player_state_changed', state => {
         console.log(state);
-        $("#info").text(state.track_window.current_track.name);
+        $("#album-art").html(state.track_window.current_track.album.images["0"])
+        $("#song-name").text(state.track_window.current_track.name);
+        $("#playlist_name").text(state.context.metadata.context_description);
+        $("artist-name").text(state.track_window.current_track.artists["0"].name);
+
       });
 
       // Ready
@@ -45,7 +49,7 @@
                 url: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
                 method: "PUT",
                 headers: {"Authorization": "Bearer "+token},
-                data: JSON.stringify({"context_uri": "spotify:user:spotify:playlist:37i9dQZF1DX7KNKjOK0o75"})
+                data: JSON.stringify({"context_uri": "spotify:user:1223107505:playlist:" + currentPlaylistID })
               };
 
                   $.ajax(info).done(function (a,b,c,d) {
@@ -62,7 +66,7 @@
                    url: "https://api.spotify.com/v1/me/player/pause?device_id=" + device_id,
                    method: "PUT",
                    headers: {"Authorization": "Bearer "+token},
-                   data: JSON.stringify({"context_uri": "spotify:user:spotify:playlist:37i9dQZF1DX7KNKjOK0o75"})
+                   data: JSON.stringify({"context_uri": "spotify:user:1223107505:playlist:" + currentPlaylistID })
                  };
                 $.ajax(pause).then(function (a,b,c,d) {
                   console.log(a,b,c,d);
@@ -76,7 +80,7 @@
                    url: "https://api.spotify.com/v1/me/player/pause?device_id=" + device_id,
                    method: "PUT",
                    headers: {"Authorization": "Bearer "+token},
-                   data: JSON.stringify({"context_uri": "spotify:user:spotify:playlist:37i9dQZF1DX7KNKjOK0o75"})
+                   data: JSON.stringify({"context_uri": "spotify:user:1223107505:playlist:" + currentPlaylistID })
                  };
                  $.ajax(play).then(function (a,b,c,d) {
                   console.log(a,b,c,d);
@@ -89,7 +93,7 @@
                   url: "https://api.spotify.com/v1/me/player/next?device_id=" + device_id,
                   method: "POST",
                   headers: {"Authorization": "Bearer "+token},
-                  data: JSON.stringify({"context_uri": "spotify:user:spotify:playlist:37i9dQZF1DX7KNKjOK0o75"})
+                  )
                 };
                 $.ajax(next).then(function (a,b,c,d) {
                   console.log(a,b,c,d);
@@ -101,9 +105,9 @@
                   url: "https://api.spotify.com/v1/me/player/previous?device_id=" + device_id,
                   method: "POST",
                   headers: {"Authorization": "Bearer "+token},
-                  data: JSON.stringify({"context_uri": "spotify:user:spotify:playlist:37i9dQZF1DX7KNKjOK0o75"})
+                  data: JSON.stringify({"context_uri": "spotify:user:1223107505:playlist:" + currentPlaylistID })
                 };
-                $.ajax(next).then(function (a,b,c,d) {
+                $.ajax(previous).then(function (a,b,c,d) {
                   console.log(a,b,c,d);
                 });
               })
@@ -111,6 +115,8 @@
 
     });
 
+
+        
       // You can now initialize Spotify.Player and use the SDK
       player.connect().then(success => {
         if (success) {

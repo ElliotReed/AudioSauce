@@ -26,7 +26,8 @@ var userZipcode = "";
 var cityName; // Retrieved from API
 var queryParams = parseQueryString(window.location.search.substr(1));
 var spotifyAccessToken = queryParams.access_token;
-
+var currentPlaylist;
+var currentPlaylistID;
 // Running on page load
 $(document).ready(function(){
   if (!spotifyAccessToken && window.location.href.includes("github.io")) {
@@ -182,30 +183,39 @@ function pickMedia(weatherCondition) {
   switch (weatherCondition) {
     case "Thunderstorm":
       backgroundImage = "https://media.giphy.com/media/CIYF0RVOmd2qQ/giphy.gif";
+      currentPlaylistID = "7KYAAVLORZyMbmEAvSEoYw?si=6Wks1rNLSQekG5BtFu_A2Q";
       break;
     case "Rain":
       backgroundImage = "https://media.giphy.com/media/Il9f7ZhytEiI0/giphy.gif";
+      currentPlaylistID ="5PQEIdCn3ezxTbC0ZbwxRq?si=0RLlni-oSdK0JMtBZlPv4g";
       break;
     case "Snow":
       backgroundImage = "https://media.giphy.com/media/Xi2Xu0MejhsUo/giphy.gif";
+      currentPlaylistID = "1nbwrUKXkXyQ5Lvk0lSgM8?si=n79tuNZvSKKItDgptyvcmA";
       break;
     case "Clear":
       backgroundImage = "http://78.media.tumblr.com/tumblr_m6ltvk2pHg1r9bkeao1_500.gif";
+      currentPlaylistID = "1QZ6eQbSRBy2HR9arAk9Ns?si=3CSbeDwVR0ybT3GkMaEK6w";
       break;
     case "Clouds":
       backgroundImage = "https://media.giphy.com/media/qq5gwamAHVofm/giphy.gif";
+      currentPlaylistID = "4m19bZbDAZ0PBCvDkBDgvn?si=RODK3XlBRG2DTGW33vyqog";
       break;
     case "Extreme":
       backgroundImage = "https://media.giphy.com/media/QksV5jdMsPYK4/giphy.gif";
+      currentPlaylistID = "747OCIB1gpl2xnq5M0DTLJ?si=M7FWvr_BRKCm54QF6773oQ";
       break;
     case "Drizzle":
       backgroundImage = "https://media.giphy.com/media/QPsEnRasf0Vfa/giphy.gif";
+      currentPlaylistID = "1klpyzcS6vqNCGA6npx637?si=EvIgWhLYTtO19tJaUQvKjQ";
       break;
     case "Additional":
       backgroundImage = "https://media.giphy.com/media/tMf9OezQLRxRu/giphy.gif";
+      currentPlaylistID = "5V68XWbxzLnM7uKL1tI24t?si=pfXLQpUISH-pgvpF2Xc8RA";
       break;
     case "Atmosphere":
       backgroundImage = "https://media.giphy.com/media/McDhCoTyRyLiE/giphy.gif";
+      currentPlaylistID = "1X7fnHaJuMOAioCyMJz3Mg?si=vYuX0St7RsGHPqR2Secg-w";
       break;
     }
 
