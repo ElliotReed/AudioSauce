@@ -28,6 +28,8 @@ var queryParams = parseQueryString(window.location.search.substr(1));
 var spotifyAccessToken = queryParams.access_token;
 var currentPlaylist;
 var currentPlaylistID;
+var spotifyLoaded = false;
+var weatherLoaded = false;
 // Running on page load
 $(document).ready(function(){
   if (!spotifyAccessToken && window.location.href.includes("github.io")) {
@@ -218,6 +220,8 @@ function pickMedia(weatherCondition) {
       currentPlaylistID = "1X7fnHaJuMOAioCyMJz3Mg?si=vYuX0St7RsGHPqR2Secg-w";
       break;
     }
+
+    weatherLoaded = true;
 
   // Set the background image
   var htmlBackground = "url(" + backgroundImage + ") no-repeat center center fixed";
