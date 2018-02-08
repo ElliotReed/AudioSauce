@@ -230,11 +230,11 @@ form {
 }
 
 #social-icon-button {
-	/*display: none;*/
+	display: none;
 }
 
 #world-icon-button {
-	/*display: none;*/
+	display: none;
 	color: white;
 	position: fixed;
     right: 0;

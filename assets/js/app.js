@@ -85,7 +85,16 @@ $.ajax({
   var dKelvin = response.main.temp; // MAX ADDED
   var dFahrenheit = (dKelvin - 273.15) * 1.8 + 32; // MAX ADDED
   var dCelcius = (dKelvin - 273.15); // MAX ADDED
+
+  var sunriseSec = response.sys.sunrise;
+  var sunriseDate = new Date(sunriseSec * 1000);
+  var sunriseTimestr = sunriseDate.toLocaleTimeString();
+  var sunsetSec = response.sys.sunset;
+  var sunsetDate = new Date(sunsetSec * 1000);
+  var sunsetTimestr = sunsetDate.toLocaleTimeString();
+
   cityName = response.name; 
+
   $("#city-name").text(cityName);
   $("#city-name2").text(cityName);
   weatherCondition = response.weather[0].main;
@@ -96,9 +105,8 @@ $.ajax({
   $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/thermometerIcon.png'/>" + "    " + dFahrenheit.toFixed(2) + " °F" + "  /  " + dCelcius.toFixed(2) + " °C" +"<hr>");
   $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/humidityIcon.png'/>" + "    " + response.main.humidity + "%" + "<hr>");
   $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/windIcon.png'/>" + "    " + response.wind.speed + " mph" + "<hr>");
-  $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/sunriseIcon.png'/>" + "    " + response.sys.sunrise + "  /  ");
-  $(".weather-drop").append("<img style='height: 30px; width: 35px; margin-right: 5px' src='assets/images/sunsetIcon.png'/>" + "    " + response.sys.sunset + "<hr>");
-
+  $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/sunriseIcon.png'/>" + "    " + sunriseTimestr + "  /  ");
+  $(".weather-drop").append("<img style='height: 30px; width: 35px; margin-right: 5px' src='assets/images/sunsetIcon.png'/>" + "    " + sunsetTimestr + "<hr>");
 }); // End ajax
 } // End getWeather ------------------------------------------------------
 
@@ -129,7 +137,7 @@ $("#submit-button").on("click", function(event) {
       $("#city-input").addClass("error");
       $("#zipcode-input").addClass("error");
       // Materialize.toast(message, displayLength, className, completeCallback);
-      Materialize.toast('You must enter your location.', 100000); // 4000 is the duration of the toast
+      Materialize.toast('You must enter your location.', 4000); // 4000 is the duration of the toast
       return;
     }
   }
@@ -137,6 +145,8 @@ $("#submit-button").on("click", function(event) {
   // Successfull! close opening screen and get weather
   $(".information-input").addClass("scale-out");
   getWeather();
+  $(".music-box").addClass("scale-in").show();
+
   // Show the chat
   $("#social-icon-button").show();
   $("#world-icon-button").show();
