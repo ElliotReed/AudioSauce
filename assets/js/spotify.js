@@ -58,7 +58,7 @@ const token = spotifyAccessToken;
                    url: "https://api.spotify.com/v1/me/player/pause?device_id=" + device_id,
                    method: "PUT",
                    headers: {"Authorization": "Bearer "+token},
-                   data: JSON.stringify({"context_uri": "spotify:user:1223107505:playlist:" + currentPlaylistID })
+                   
                  };
                 $.ajax(pause).then(function (a,b,c,d) {
                   console.log(a,b,c,d);
@@ -72,7 +72,6 @@ const token = spotifyAccessToken;
                    url: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
                    method: "PUT",
                    headers: {"Authorization": "Bearer "+token},
-                   data: JSON.stringify({"context_uri": "spotify:user:1223107505:playlist:" + currentPlaylistID })
                  };
                  $.ajax(play).then(function (a,b,c,d) {
                   console.log(a,b,c,d);
@@ -85,7 +84,6 @@ const token = spotifyAccessToken;
                   url: "https://api.spotify.com/v1/me/player/next?device_id=" + device_id,
                   method: "POST",
                   headers: {"Authorization": "Bearer "+token},
-                  data: JSON.stringify({"context_uri": "spotify:user:1223107505:playlist:" + currentPlaylistID })
                 };
                 $.ajax(next).then(function (a,b,c,d) {
                   console.log(a,b,c,d);
@@ -97,7 +95,6 @@ const token = spotifyAccessToken;
                   url: "https://api.spotify.com/v1/me/player/previous?device_id=" + device_id,
                   method: "POST",
                   headers: {"Authorization": "Bearer "+token},
-                  data: JSON.stringify({"context_uri": "spotify:user:1223107505:playlist:" + currentPlaylistID })
                 };
                 $.ajax(previous).then(function (a,b,c,d) {
                   console.log(a,b,c,d);
