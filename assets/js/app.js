@@ -4,7 +4,7 @@ var config = {
   authDomain: "audiosauce-6eb52.firebaseapp.com",
   databaseURL: "https://audiosauce-6eb52.firebaseio.com",
   projectId: "audiosauce-6eb52",
-  storageBucket: "",
+  storageBucket: "audiosauce-6eb52.appspot.com",
   messagingSenderId: "266026610182"
 };
 firebase.initializeApp(config);
@@ -13,18 +13,27 @@ firebase.initializeApp(config);
 var database = firebase.database();
 
 // Initialize global variable
+var currentMoment;
+var usernameInput;
+var userComment;
 var weatherCondition;
 var geolocationAllowed = false;
-var userLatitude; 
-var userLongitude; 
+var userLatitude;
+var userLongitude;
 var weatherSearchString;
 var userCity = "";
 var userZipcode = "";
 var cityName; // Retrieved from API
+var queryParams = parseQueryString(window.location.search.substr(1));
+var spotifyAccessToken = queryParams.access_token;
 
 // Running on page load
 $(document).ready(function(){
-  getLocation();
+  if (!spotifyAccessToken && window.location.href.includes("github.io")) {
+    window.location = "https://polar-headland-83144.herokuapp.com/login?callback=" + window.location.href;
+  } else {
+    getLocation();
+  }
 });
 
 // Get location data ----------------------------
@@ -60,7 +69,7 @@ function geoError() {
 function getWeather() {
 // Setup for weather API call
 var weatherAPIKey = "&APPID=4aa09d0ed51ac90ebeb79c63e62ba521";
-var weatherSiteString = "http://api.openweathermap.org/data/2.5/weather";
+var weatherSiteString = "https://api.openweathermap.org/data/2.5/weather";
 var weatherQueryURL = weatherSiteString + weatherSearchString + weatherAPIKey;
 
 // Weather API call
@@ -73,6 +82,7 @@ $.ajax({
   var dKelvin = response.main.temp; // MAX ADDED
   var dFahrenheit = (dKelvin - 273.15) * 1.8 + 32; // MAX ADDED
   var dCelcius = (dKelvin - 273.15); // MAX ADDED
+  cityName = response.name; 
   $("#city-name").text(cityName);
   $("#city-name2").text(cityName);
   weatherCondition = response.weather[0].main;
@@ -91,14 +101,14 @@ $.ajax({
 $("#submit-button").on("click", function(event) {
   event.preventDefault();
   // Test for username input
-  var usernameInput = $("#username-input").val().trim();
+  usernameInput = $("#username-input").val().trim();
 
   if (usernameInput === "") {
     $("#username-input").addClass("error");
     // Materialize.toast(message, displayLength, className, completeCallback);
     Materialize.toast('You must enter your name.', 4000); // 4000 is the duration of the toast
     return;
-  } 
+  }
 
   if (!geolocationAllowed) {
     // Test for user location input
@@ -123,7 +133,9 @@ $("#submit-button").on("click", function(event) {
   // Successfull! close opening screen and get weather
   $(".information-input").addClass("scale-out");
   getWeather();
-
+  // Show the chat
+  $("#social-icon-button").show();
+  $("#world-icon-button").show();
 }); // End submit ----------------------------------------------------------------
 
 // Display messages
@@ -132,25 +144,33 @@ function displayMessages(messages) {
 }
 
 // Check database and display comments -----------------------------------------
-database.ref().on("value", function(dataSnapshot) {
-  var username = dataSnapshot.user.val();
-  var comment = dataSnapshot.comment.val(); 
-  console.log(username);
+
+database.ref().on("child_added", function(dataSnapshot) {
+  var username = dataSnapshot.val().username;
+  var comment = dataSnapshot.val().comment; 
+  console.log("User: " + username);
+
   var commentDiv = $("<div>");
   var commentParagraph = $("<p>" + username + ": " + comment + "</p>");
   commentDiv.append(commentParagraph);
-  // $("#comment-container").prepend(commentDiv);
+  $(".chatroom-drop").prepend(commentDiv);
 }); //End display comments --------------------------------------------------
 
 // Submit comment -------------------------------------------------------------
-$("#submit-comment").on("click", function(event) {
+$("#send-chat-button").on("click", function(event) {
   event.preventDefault();
+  userComment = $("#chatroom-textbox").val().trim();
+  currentMoment = moment();
+  console.log("Comment: " + userComment + " City: " + cityName + " User: " + usernameInput);
+  $("#chatroom-textbox").val("");
   database.ref().push({
     username: usernameInput,
-    comment: userComment
+    comment: userComment,
+    location: cityName,
+    // commentTime: currentMoment
   });
-}, function(errorObject) {
-  console.log("The read failed: " + errorObject.code);
+// }, function(errorObject) {
+//   console.log("The read failed: " + errorObject.code);
 }); // End submit comment -----------------------------------------------------
 
 // Function to set media to weather condition --------------------------------------
@@ -180,13 +200,13 @@ function pickMedia(weatherCondition) {
       break;
     case "Drizzle":
       backgroundImage = "https://media.giphy.com/media/QPsEnRasf0Vfa/giphy.gif";
-      break;  
+      break;
     case "Additional":
       backgroundImage = "https://media.giphy.com/media/tMf9OezQLRxRu/giphy.gif";
-      break; 
+      break;
     case "Atmosphere":
       backgroundImage = "https://media.giphy.com/media/McDhCoTyRyLiE/giphy.gif";
-      break; 
+      break;
     }
 
   // Set the background image
@@ -200,3 +220,15 @@ function pickMedia(weatherCondition) {
   });
 } // End pickMedia -----------------------------------------------------------------
 
+
+function parseQueryString( queryString ) {
+    var params = {}, queries, temp, i, l;
+    // Split into key/value pairs
+    queries = queryString.split("&");
+    // Convert the array of strings into an object
+    for ( i = 0, l = queries.length; i < l; i++ ) {
+        temp = queries[i].split('=');
+        params[temp[0]] = temp[1];
+    }
+    return params;
+};

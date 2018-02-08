@@ -16,11 +16,12 @@
 
     <!-- Compiled and minified JavaScript -->
     <script
-        src="http://code.jquery.com/jquery-3.3.1.min.js"
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous">
     </script>
     <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+  
 
     <title>AudioSauce</title>
 </head>
@@ -90,7 +91,11 @@
             <br>
         <div id="music-buttons">
             <p>
-                IMPLEMENT BUTTONS HERE
+                <button id="pause">Pause</button>
+                <button id="next">next</button>
+                <button id="previous">previous</button>
+                <button id="play">play</button>
+
             </p>
         </div>
             <br>
@@ -167,14 +172,18 @@
             </div>
         </div>
     </div>
-        
+
 
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <!-- UIkit JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.39/js/uikit.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.39/js/uikit-icons.min.js"></script>
+    <!-- moment js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.js"></script>
     <!-- personal js -->
     <script src="assets/js/app.js"></script>
+     <script src="assets/js/spotify.js"></script>
+    
 </body>
 </html>
