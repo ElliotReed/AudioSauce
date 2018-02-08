@@ -146,7 +146,11 @@ $("#submit-button").on("click", function(event) {
 
   // Successfull! close opening screen and get weather
   $(".information-input").addClass("scale-out");
-  $(".music-box").addClass("scale-in").show();
+  setTimeout(function(){  
+    $(".information-input").addClass("displayNone")
+    $(".music-box").addClass("scale-in")
+  }, 500);
+
 
   // Show the chat
   $("#social-icon-button").show();
