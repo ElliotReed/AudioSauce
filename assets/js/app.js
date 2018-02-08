@@ -134,14 +134,18 @@ function displayMessages(messages) {
 // Check database and display comments -----------------------------------------
 
 database.ref().on("child_added", function(dataSnapshot) {
+  $(".chatroom-drop").empty().
+  var location =dataSnapshot.val().location;
   var username = dataSnapshot.val().username;
   var comment = dataSnapshot.val().comment; 
-  console.log("User: " + username);
+  console.log("Location: " + location + "City: " + cityName);
 
-  var commentDiv = $("<div>");
-  var commentParagraph = $("<p>" + username + ": " + comment + "</p>");
-  commentDiv.append(commentParagraph);
-  $(".chatroom-drop").prepend(commentDiv);
+  if (location === cityName) {
+    var commentDiv = $("<div>");
+    var commentParagraph = $("<p>" + username + ": " + comment + "</p>");
+    commentDiv.append(commentParagraph);
+    $(".chatroom-drop").prepend(commentDiv);
+  }
 }); //End display comments --------------------------------------------------
 
 // Submit comment -------------------------------------------------------------
