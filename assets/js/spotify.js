@@ -21,7 +21,7 @@ const token = spotifyAccessToken;
         $("#album-art").html(state.track_window.current_track.album.images["0"])
         $("#song-name").text(state.track_window.current_track.name);
         $("#playlist_name").text(state.context.metadata.context_description);
-        $("artist-name").text(state.track_window.current_track.artists["0"].name);
+        $("#artist-name").text(state.track_window.current_track.artists["0"].name);
 
       });
 
