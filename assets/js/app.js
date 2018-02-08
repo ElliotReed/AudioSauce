@@ -181,9 +181,8 @@ function displayComments() {
   }); 
 } //End display comments --------------------------------------------------
 
-// Submit comment -------------------------------------------------------------
-$("#send-chat-button").on("click", function(event) {
-  event.preventDefault();
+function handleSubmit(eventPassed) {
+  eventPassed.preventDefault();
   userComment = $("#chatroom-textbox").val().trim();
   currentMoment = moment();
   console.log("Comment: " + userComment + " City: " + cityName + " User: " + usernameInput);
@@ -193,23 +192,28 @@ $("#send-chat-button").on("click", function(event) {
     comment: userComment,
     location: cityName,
   });
-}); // End submit comment -----------------------------------------------------
+}
+// Submit comment -------------------------------------------------------------
+$("#send-chat-button").on("click", function(event) {
+  handleSubmit(event);
+  // event.preventDefault();
+  // userComment = $("#chatroom-textbox").val().trim();
+  // currentMoment = moment();
+  // console.log("Comment: " + userComment + " City: " + cityName + " User: " + usernameInput);
+  // $("#chatroom-textbox").val("");
+  // database.ref().push({
+  //   username: usernameInput,
+  //   comment: userComment,
+  //   location: cityName,
+  // });
+}); // End submit comment
 
-// TO DO - HITTING ENTER TO SUBMIT COMMENT
-// $('#send-chat-button').keyup(function(e){
-//         if(e.keyCode == 13) {
-//           event.preventDefault();
-//             userComment = $("#chatroom-textbox").val().trim();
-//             currentMoment = moment();
-//             console.log("Comment: " + userComment + " City: " + cityName + " User: " + usernameInput);
-//             $("#chatroom-textbox").val("");
-//             database.ref().push({
-//               username: usernameInput,
-//               comment: userComment,
-//               location: cityName,
-//             });
-//         }
-// });
+$('#chatroom-textbox').keyup(function(e){
+        if(e.keyCode == 13 && $("#chatroom-textbox").val().trim().length > 0) {
+          handleSubmit(e);
+        }
+});
+
 
 // Function to set media to weather condition --------------------------------------
 function pickMedia(weatherCondition) {
