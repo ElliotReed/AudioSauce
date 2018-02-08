@@ -93,7 +93,7 @@
                   url: "https://api.spotify.com/v1/me/player/next?device_id=" + device_id,
                   method: "POST",
                   headers: {"Authorization": "Bearer "+token},
-                  )
+                  data: JSON.stringify({"context_uri": "spotify:user:1223107505:playlist:" + currentPlaylistID })
                 };
                 $.ajax(next).then(function (a,b,c,d) {
                   console.log(a,b,c,d);
