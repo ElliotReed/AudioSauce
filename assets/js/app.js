@@ -26,7 +26,7 @@ var spotifyAccessToken = queryParams.access_token;
 
 // Running on page load
 $(document).ready(function(){
-  if (!spotifyAccessToken) {
+  if (!spotifyAccessToken && window.location.href.includes("github.io")) {
     window.location = "https://polar-headland-83144.herokuapp.com/login?callback=" + window.location.href;
   } else {
     getLocation();
