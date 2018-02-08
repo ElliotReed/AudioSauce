@@ -1,21 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Spotify Web</title>
-  <script
-  src="http://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-</head>
-<body>
-  
+//opening the spotify player 
+var device_id;
+const token = spotifyAccessToken;
 
-  <button id="pause">Pause</button>
-  <div id="info"></div>
-  <script src="https://sdk.scdn.co/spotify-player.js"></script>
-  <script>
     window.onSpotifyWebPlaybackSDKReady = () => {
-      const token = 'BQD0tOgink0a4creLcwh7hwtCJmPNAyt9putXvHRmfQJpMzGlRB6Pr6IvaE78G3DKWJggvVGNSYXMqhetMc_TY7y_GyX2HYwdLnIH5J7ylzr74MaCVi6G6bZEER40IFxI7hSS96Tmi6-4OWa0CmaR4Nt4KURa4nGj-hUI6hmDW8';
+      
       const player = new Spotify.Player({
         name: 'Web Playback SDK Quick Start Player',
         getOAuthToken: cb => { cb(token); }
@@ -30,13 +18,19 @@
       // Playback status updates
       player.on('player_state_changed', state => {
         console.log(state);
-        $("#info").text(state.track_window.current_track.name);
+        $("#album-art").html(state.track_window.current_track.album.images["0"])
+        $("#song-name").text(state.track_window.current_track.name);
+        $("#playlist_name").text(state.context.metadata.context_description);
+        $("#artist-name").text(state.track_window.current_track.artists["0"].name);
+
       });
 
       // Ready
       player.on('ready', data => {
-        let { device_id } = data;
+        device_id = data.device_id;
         console.log('Ready with Device ID', device_id);
+
+        spotifyLoaded = true;
 
         // var settings = {
         //   "async": true,
@@ -54,19 +48,7 @@
         // $.ajax(settings).done(function (response) {
         //   console.log(response);
         // });
-        
-              var info = {
-                url: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
-                method: "PUT",
-                headers: {"Authorization": "Bearer "+token},
-                data: JSON.stringify({"context_uri": "spotify:user:spotify:playlist:37i9dQZF1DX7KNKjOK0o75"})
-              };
-
-                  $.ajax(info).done(function (a,b,c,d) {
-                    console.log(a,b,c,d);
-                  }).fail(function(a,b,c,d) {
-                    console.log(a,b,c,d);
-                  });
+// pulling the ajax info for the spotify player 
 
                 
 
@@ -76,7 +58,7 @@
                    url: "https://api.spotify.com/v1/me/player/pause?device_id=" + device_id,
                    method: "PUT",
                    headers: {"Authorization": "Bearer "+token},
-                   data: JSON.stringify({"context_uri": "spotify:user:spotify:playlist:37i9dQZF1DX7KNKjOK0o75"})
+                   data: JSON.stringify({"context_uri": "spotify:user:1223107505:playlist:" + currentPlaylistID })
                  };
                 $.ajax(pause).then(function (a,b,c,d) {
                   console.log(a,b,c,d);
@@ -90,7 +72,7 @@
                    url: "https://api.spotify.com/v1/me/player/pause?device_id=" + device_id,
                    method: "PUT",
                    headers: {"Authorization": "Bearer "+token},
-                   data: JSON.stringify({"context_uri": "spotify:user:spotify:playlist:37i9dQZF1DX7KNKjOK0o75"})
+                   data: JSON.stringify({"context_uri": "spotify:user:1223107505:playlist:" + currentPlaylistID })
                  };
                  $.ajax(play).then(function (a,b,c,d) {
                   console.log(a,b,c,d);
@@ -103,21 +85,21 @@
                   url: "https://api.spotify.com/v1/me/player/next?device_id=" + device_id,
                   method: "POST",
                   headers: {"Authorization": "Bearer "+token},
-                  data: JSON.stringify({"context_uri": "spotify:user:spotify:playlist:37i9dQZF1DX7KNKjOK0o75"})
+                  data: JSON.stringify({"context_uri": "spotify:user:1223107505:playlist:" + currentPlaylistID })
                 };
                 $.ajax(next).then(function (a,b,c,d) {
                   console.log(a,b,c,d);
                 });
               })
 
-               $("#next").click(function() {
-                var next = {
+               $("#previous").click(function() {
+                var previous = {
                   url: "https://api.spotify.com/v1/me/player/previous?device_id=" + device_id,
                   method: "POST",
                   headers: {"Authorization": "Bearer "+token},
-                  data: JSON.stringify({"context_uri": "spotify:user:spotify:playlist:37i9dQZF1DX7KNKjOK0o75"})
+                  data: JSON.stringify({"context_uri": "spotify:user:1223107505:playlist:" + currentPlaylistID })
                 };
-                $.ajax(next).then(function (a,b,c,d) {
+                $.ajax(previous).then(function (a,b,c,d) {
                   console.log(a,b,c,d);
                 });
               })
@@ -125,6 +107,8 @@
 
     });
 
+
+        
       // You can now initialize Spotify.Player and use the SDK
       player.connect().then(success => {
         if (success) {
@@ -134,6 +118,25 @@
     };
 
 
-    </script>
-  </body>
-  </html>
+checkToPlay();
+
+
+function checkToPlay() {
+  if (spotifyLoaded && weatherLoaded) {
+    // play music
+    var info = {
+      url: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
+      method: "PUT",
+      headers: {"Authorization": "Bearer "+token},
+      data: JSON.stringify({"context_uri": "spotify:user:1223107505:playlist:" + currentPlaylistID })
+    };
+
+        $.ajax(info).done(function (a,b,c,d) {
+          console.log(a,b,c,d);
+        }).fail(function(a,b,c,d) {
+          console.log(a,b,c,d);
+        });
+  } else {
+    setTimeout(checkToPlay, 500);
+  }
+}

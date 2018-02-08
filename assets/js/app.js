@@ -26,7 +26,10 @@ var userZipcode = "";
 var cityName; // Retrieved from API
 var queryParams = parseQueryString(window.location.search.substr(1));
 var spotifyAccessToken = queryParams.access_token;
-
+var currentPlaylist;
+var currentPlaylistID;
+var spotifyLoaded = false;
+var weatherLoaded = false;
 // Running on page load
 $(document).ready(function(){
   if (!spotifyAccessToken && window.location.href.includes("github.io")) {
@@ -78,11 +81,24 @@ $.ajax({
   method: "GET"
 }).then(function(response) {
   console.log(response);
+  cityName = response.name;
+  var dKelvin = response.main.temp; // MAX ADDED
+  var dFahrenheit = (dKelvin - 273.15) * 1.8 + 32; // MAX ADDED
+  var dCelcius = (dKelvin - 273.15); // MAX ADDED
   cityName = response.name; 
   $("#city-name").text(cityName);
+  $("#city-name2").text(cityName);
   weatherCondition = response.weather[0].main;
   pickMedia(weatherCondition);
   displayComments();
+  
+  // Display weather data on weather flyout
+  $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/thermometerIcon.png'/>" + "    " + dFahrenheit.toFixed(2) + " °F" + "  /  " + dCelcius.toFixed(2) + " °C" +"<hr>");
+  $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/humidityIcon.png'/>" + "    " + response.main.humidity + "%" + "<hr>");
+  $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/windIcon.png'/>" + "    " + response.wind.speed + " mph" + "<hr>");
+  $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/sunriseIcon.png'/>" + "    " + response.sys.sunrise + "  /  ");
+  $(".weather-drop").append("<img style='height: 30px; width: 35px; margin-right: 5px' src='assets/images/sunsetIcon.png'/>" + "    " + response.sys.sunset + "<hr>");
+
 }); // End ajax
 } // End getWeather ------------------------------------------------------
 
@@ -173,32 +189,43 @@ function pickMedia(weatherCondition) {
   switch (weatherCondition) {
     case "Thunderstorm":
       backgroundImage = "https://media.giphy.com/media/CIYF0RVOmd2qQ/giphy.gif";
+      currentPlaylistID = "7KYAAVLORZyMbmEAvSEoYw";
       break;
     case "Rain":
       backgroundImage = "https://media.giphy.com/media/Il9f7ZhytEiI0/giphy.gif";
+      currentPlaylistID ="5PQEIdCn3ezxTbC0ZbwxRq";
       break;
     case "Snow":
       backgroundImage = "https://media.giphy.com/media/Xi2Xu0MejhsUo/giphy.gif";
+      currentPlaylistID = "1nbwrUKXkXyQ5Lvk0lSgM8";
       break;
     case "Clear":
       backgroundImage = "http://78.media.tumblr.com/tumblr_m6ltvk2pHg1r9bkeao1_500.gif";
+      currentPlaylistID = "1QZ6eQbSRBy2HR9arAk9Ns";
       break;
     case "Clouds":
       backgroundImage = "https://media.giphy.com/media/qq5gwamAHVofm/giphy.gif";
+      currentPlaylistID = "4m19bZbDAZ0PBCvDkBDgvn";
       break;
     case "Extreme":
       backgroundImage = "https://media.giphy.com/media/QksV5jdMsPYK4/giphy.gif";
+      currentPlaylistID = "747OCIB1gpl2xnq5M0DTLJ";
       break;
     case "Drizzle":
       backgroundImage = "https://media.giphy.com/media/QPsEnRasf0Vfa/giphy.gif";
+      currentPlaylistID = "1klpyzcS6vqNCGA6npx637";
       break;
     case "Additional":
       backgroundImage = "https://media.giphy.com/media/tMf9OezQLRxRu/giphy.gif";
+      currentPlaylistID = "5V68XWbxzLnM7uKL1tI24t";
       break;
     case "Atmosphere":
       backgroundImage = "https://media.giphy.com/media/McDhCoTyRyLiE/giphy.gif";
+      currentPlaylistID = "1X7fnHaJuMOAioCyMJz3Mg";
       break;
     }
+
+    weatherLoaded = true;
 
   // Set the background image
   var htmlBackground = "url(" + backgroundImage + ") no-repeat center center fixed";
