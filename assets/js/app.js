@@ -68,11 +68,22 @@ $.ajax({
   url: weatherQueryURL,
   method: "GET"
 }).then(function(response) {
-  // console.log(response);
+  console.log(response);
   cityName = response.name;
+  var dKelvin = response.main.temp; // MAX ADDED
+  var dFahrenheit = (dKelvin - 273.15) * 1.8 + 32; // MAX ADDED
+  var dCelcius = (dKelvin - 273.15); // MAX ADDED
   $("#city-name").text(cityName);
+  $("#city-name2").text(cityName);
   weatherCondition = response.weather[0].main;
   pickMedia(weatherCondition);
+  console.log(response.main.temp);
+  console.log(response.weather[0].main);
+  $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/thermometerIcon.png'/>" + "    " + dFahrenheit.toFixed(2) + " °F" + "  /  " + dCelcius.toFixed(2) + " °C" +"<hr>");
+  $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/humidityIcon.png'/>" + "    " + response.main.humidity + "%" + "<hr>");
+  $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/windIcon.png'/>" + "    " + response.wind.speed + " mph" + "<hr>");
+  $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/sunriseIcon.png'/>" + "    " + response.sys.sunrise + "  /  ");
+  $(".weather-drop").append("<img style='height: 30px; width: 35px; margin-right: 5px' src='assets/images/sunsetIcon.png'/>" + "    " + response.sys.sunset + "<hr>");
 }); // End ajax
 } // End getWeather ------------------------------------------------------
 
