@@ -285,6 +285,17 @@ form {
 	box-shadow:inset 5px 5px 50px 5px rgba(0,0,0,.5);
 }
 
+.chatroom-drop {
+	background-color: white;
+    color: black;
+    padding: 2.5%;
+    margin: 10px 0px;
+    border-radius: 2px;
+    -webkit-box-shadow:inset 5px 5px 50px 5px rgba(0,0,0,.5);
+	box-shadow:inset 5px 5px 50px 5px rgba(0,0,0,.5);
+	overflow: scroll;
+}
+
 #send-chat-button {
 	text-transform: capitalize;
 	border-top-left-radius: 0px;

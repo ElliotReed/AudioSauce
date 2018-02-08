@@ -130,8 +130,10 @@ $("#submit-button").on("click", function(event) {
     if ((userCity !== "") || (userZipcode !== "")) {
       if (userZipcode !== ""){
         weatherSearchString = "?zip=" + $("#zipcode-input").val().trim();
+        getWeather();
       } else {
         weatherSearchString = "?q=" + $("#city-input").val().trim();
+        getWeather();
       }
     } else {
       $("#city-input").addClass("error");
@@ -144,7 +146,6 @@ $("#submit-button").on("click", function(event) {
 
   // Successfull! close opening screen and get weather
   $(".information-input").addClass("scale-out");
-  getWeather();
   $(".music-box").addClass("scale-in").show();
 
   // Show the chat
@@ -189,6 +190,22 @@ $("#send-chat-button").on("click", function(event) {
     location: cityName,
   });
 }); // End submit comment -----------------------------------------------------
+
+// TO DO - HITTING ENTER TO SUBMIT COMMENT
+// $('#send-chat-button').keyup(function(e){
+//         if(e.keyCode == 13) {
+//           event.preventDefault();
+//             userComment = $("#chatroom-textbox").val().trim();
+//             currentMoment = moment();
+//             console.log("Comment: " + userComment + " City: " + cityName + " User: " + usernameInput);
+//             $("#chatroom-textbox").val("");
+//             database.ref().push({
+//               username: usernameInput,
+//               comment: userComment,
+//               location: cityName,
+//             });
+//         }
+// });
 
 // Function to set media to weather condition --------------------------------------
 function pickMedia(weatherCondition) {
