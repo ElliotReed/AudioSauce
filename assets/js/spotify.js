@@ -100,6 +100,16 @@ const token = spotifyAccessToken;
                   console.log(a,b,c,d);
                 });
               })
+                $("#seek").click(function() {
+                var seek = {
+                  url: "https://api.spotify.com/v1/me/player/seek?device_id=" + device_id,
+                  method: "PUT",
+                  headers: {"Authorization": "Bearer "+token},
+                };
+                $.ajax(seek).then(function (a,b,c,d) {
+                  console.log(a,b,c,d);
+                });
+              })
                
 
     });
