@@ -230,11 +230,11 @@ form {
 }
 
 #social-icon-button {
-	/*display: none;*/
+	display: none;
 }
 
 #world-icon-button {
-	/*display: none;*/
+	display: none;
 	color: white;
 	position: fixed;
     right: 0;
@@ -283,6 +283,17 @@ form {
 	padding-left: 2.5%;
 	-webkit-box-shadow:inset 5px 5px 50px 5px rgba(0,0,0,.5);
 	box-shadow:inset 5px 5px 50px 5px rgba(0,0,0,.5);
+}
+
+.chatroom-drop {
+	background-color: white;
+    color: black;
+    padding: 2.5%;
+    margin: 10px 0px;
+    border-radius: 2px;
+    -webkit-box-shadow:inset 5px 5px 50px 5px rgba(0,0,0,.5);
+	box-shadow:inset 5px 5px 50px 5px rgba(0,0,0,.5);
+	overflow-y: scroll;
 }
 
 #send-chat-button {

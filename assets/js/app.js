@@ -85,18 +85,28 @@ $.ajax({
   var dKelvin = response.main.temp; // MAX ADDED
   var dFahrenheit = (dKelvin - 273.15) * 1.8 + 32; // MAX ADDED
   var dCelcius = (dKelvin - 273.15); // MAX ADDED
+
+  var sunriseSec = response.sys.sunrise;
+  var sunriseDate = new Date(sunriseSec * 1000);
+  var sunriseTimestr = sunriseDate.toLocaleTimeString();
+  var sunsetSec = response.sys.sunset;
+  var sunsetDate = new Date(sunsetSec * 1000);
+  var sunsetTimestr = sunsetDate.toLocaleTimeString();
+
   cityName = response.name; 
+
   $("#city-name").text(cityName);
   $("#city-name2").text(cityName);
   weatherCondition = response.weather[0].main;
   pickMedia(weatherCondition);
-  console.log(response.main.temp);
-  console.log(response.weather[0].main);
+  displayComments();
+  
+  // Display weather data on weather flyout
   $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/thermometerIcon.png'/>" + "    " + dFahrenheit.toFixed(2) + " °F" + "  /  " + dCelcius.toFixed(2) + " °C" +"<hr>");
   $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/humidityIcon.png'/>" + "    " + response.main.humidity + "%" + "<hr>");
   $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/windIcon.png'/>" + "    " + response.wind.speed + " mph" + "<hr>");
-  $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/sunriseIcon.png'/>" + "    " + response.sys.sunrise + "  /  ");
-  $(".weather-drop").append("<img style='height: 30px; width: 35px; margin-right: 5px' src='assets/images/sunsetIcon.png'/>" + "    " + response.sys.sunset + "<hr>");
+  $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/sunriseIcon.png'/>" + "    " + sunriseTimestr + "  /  ");
+  $(".weather-drop").append("<img style='height: 30px; width: 35px; margin-right: 5px' src='assets/images/sunsetIcon.png'/>" + "    " + sunsetTimestr + "<hr>");
 }); // End ajax
 } // End getWeather ------------------------------------------------------
 
@@ -120,22 +130,24 @@ $("#submit-button").on("click", function(event) {
     if ((userCity !== "") || (userZipcode !== "")) {
       if (userZipcode !== ""){
         weatherSearchString = "?zip=" + $("#zipcode-input").val().trim();
+        getWeather();
       } else {
         weatherSearchString = "?q=" + $("#city-input").val().trim();
+        getWeather();
       }
     } else {
       $("#city-input").addClass("error");
       $("#zipcode-input").addClass("error");
-      alert("You must enter a location.");
       // Materialize.toast(message, displayLength, className, completeCallback);
-      Materialize.toast('You must enter your location.', 100000); // 4000 is the duration of the toast
+      Materialize.toast('You must enter your location.', 4000); // 4000 is the duration of the toast
       return;
     }
   }
 
   // Successfull! close opening screen and get weather
   $(".information-input").addClass("scale-out");
-  getWeather();
+  $(".music-box").addClass("scale-in").show();
+
   // Show the chat
   $("#social-icon-button").show();
   $("#world-icon-button").show();
@@ -147,17 +159,23 @@ function displayMessages(messages) {
 }
 
 // Check database and display comments -----------------------------------------
+function displayComments() {
 
-database.ref().on("child_added", function(dataSnapshot) {
-  var username = dataSnapshot.val().username;
-  var comment = dataSnapshot.val().comment; 
-  console.log("User: " + username);
-
-  var commentDiv = $("<div>");
-  var commentParagraph = $("<p>" + username + ": " + comment + "</p>");
-  commentDiv.append(commentParagraph);
-  $(".chatroom-drop").prepend(commentDiv);
-}); //End display comments --------------------------------------------------
+  database.ref().on("child_added", function(dataSnapshot) {
+    // $(".chatroom-drop").empty();
+    var location =dataSnapshot.val().location;
+    var username = dataSnapshot.val().username;
+    var comment = dataSnapshot.val().comment; 
+    console.log("Location: " + location + "City: " + cityName);
+    
+    if (location === cityName) {
+      var commentDiv = $("<div>");
+      var commentParagraph = $("<p>" + username + ": " + comment + "</p>");
+      commentDiv.append(commentParagraph);
+      $(".chatroom-drop").prepend(commentDiv);
+    }
+  }); 
+} //End display comments --------------------------------------------------
 
 // Submit comment -------------------------------------------------------------
 $("#send-chat-button").on("click", function(event) {
@@ -170,11 +188,24 @@ $("#send-chat-button").on("click", function(event) {
     username: usernameInput,
     comment: userComment,
     location: cityName,
-    // commentTime: currentMoment
   });
-// }, function(errorObject) {
-//   console.log("The read failed: " + errorObject.code);
 }); // End submit comment -----------------------------------------------------
+
+// TO DO - HITTING ENTER TO SUBMIT COMMENT
+// $('#send-chat-button').keyup(function(e){
+//         if(e.keyCode == 13) {
+//           event.preventDefault();
+//             userComment = $("#chatroom-textbox").val().trim();
+//             currentMoment = moment();
+//             console.log("Comment: " + userComment + " City: " + cityName + " User: " + usernameInput);
+//             $("#chatroom-textbox").val("");
+//             database.ref().push({
+//               username: usernameInput,
+//               comment: userComment,
+//               location: cityName,
+//             });
+//         }
+// });
 
 // Function to set media to weather condition --------------------------------------
 function pickMedia(weatherCondition) {
