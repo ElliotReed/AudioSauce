@@ -82,6 +82,7 @@ $.ajax({
   $("#city-name").text(cityName);
   weatherCondition = response.weather[0].main;
   pickMedia(weatherCondition);
+  displayComments();
 }); // End ajax
 } // End getWeather ------------------------------------------------------
 
@@ -111,7 +112,6 @@ $("#submit-button").on("click", function(event) {
     } else {
       $("#city-input").addClass("error");
       $("#zipcode-input").addClass("error");
-      alert("You must enter a location.");
       // Materialize.toast(message, displayLength, className, completeCallback);
       Materialize.toast('You must enter your location.', 100000); // 4000 is the duration of the toast
       return;
@@ -132,21 +132,23 @@ function displayMessages(messages) {
 }
 
 // Check database and display comments -----------------------------------------
+function displayComments() {
 
-database.ref().on("child_added", function(dataSnapshot) {
-  $(".chatroom-drop").empty().
-  var location =dataSnapshot.val().location;
-  var username = dataSnapshot.val().username;
-  var comment = dataSnapshot.val().comment; 
-  console.log("Location: " + location + "City: " + cityName);
-
-  if (location === cityName) {
-    var commentDiv = $("<div>");
-    var commentParagraph = $("<p>" + username + ": " + comment + "</p>");
-    commentDiv.append(commentParagraph);
-    $(".chatroom-drop").prepend(commentDiv);
-  }
-}); //End display comments --------------------------------------------------
+  database.ref().on("child_added", function(dataSnapshot) {
+    // $(".chatroom-drop").empty();
+    var location =dataSnapshot.val().location;
+    var username = dataSnapshot.val().username;
+    var comment = dataSnapshot.val().comment; 
+    console.log("Location: " + location + "City: " + cityName);
+    
+    if (location === cityName) {
+      var commentDiv = $("<div>");
+      var commentParagraph = $("<p>" + username + ": " + comment + "</p>");
+      commentDiv.append(commentParagraph);
+      $(".chatroom-drop").prepend(commentDiv);
+    }
+  }); 
+} //End display comments --------------------------------------------------
 
 // Submit comment -------------------------------------------------------------
 $("#send-chat-button").on("click", function(event) {
@@ -159,10 +161,7 @@ $("#send-chat-button").on("click", function(event) {
     username: usernameInput,
     comment: userComment,
     location: cityName,
-    // commentTime: currentMoment
   });
-// }, function(errorObject) {
-//   console.log("The read failed: " + errorObject.code);
 }); // End submit comment -----------------------------------------------------
 
 // Function to set media to weather condition --------------------------------------
