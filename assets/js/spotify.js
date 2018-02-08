@@ -96,8 +96,8 @@
                 });
               })
 
-               $("#next").click(function() {
-                var next = {
+               $("#previous").click(function() {
+                var previous = {
                   url: "https://api.spotify.com/v1/me/player/previous?device_id=" + device_id,
                   method: "POST",
                   headers: {"Authorization": "Bearer "+token},
