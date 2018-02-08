@@ -180,7 +180,7 @@ form {
     border: solid;
     border-width: 1px;
     text-align: left;
-    padding: 1%;
+    padding: 4%;
     z-index: 1000;
     margin-top: 50px;
 }
@@ -197,7 +197,7 @@ form {
     border: solid;
     border-width: 1px;
     text-align: left;
-    padding: 1%;
+    padding: 4%;
     z-index: 1000;
     margin-top: 50px;
 }
@@ -205,6 +205,18 @@ form {
 #chat-welcome-text {
 	margin: 0;
 	color: white;
+}
+
+#weather-welcome-text {
+	color: white;
+}
+
+#sunshine {
+	position: fixed;
+    right: 0;
+    top: 0;
+    margin-top: 80px;
+    margin-right: 45px;
 }
 
 .uk-button-default {
@@ -218,11 +230,11 @@ form {
 }
 
 #social-icon-button {
-	display: none;
+	/*display: none;*/
 }
 
 #world-icon-button {
-	display: none;
+	/*display: none;*/
 	color: white;
 	position: fixed;
     right: 0;
