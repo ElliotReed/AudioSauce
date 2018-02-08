@@ -90,13 +90,15 @@ $.ajax({
   $("#city-name2").text(cityName);
   weatherCondition = response.weather[0].main;
   pickMedia(weatherCondition);
-  console.log(response.main.temp);
-  console.log(response.weather[0].main);
+  displayComments();
+  
+  // Display weather data on weather flyout
   $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/thermometerIcon.png'/>" + "    " + dFahrenheit.toFixed(2) + " °F" + "  /  " + dCelcius.toFixed(2) + " °C" +"<hr>");
   $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/humidityIcon.png'/>" + "    " + response.main.humidity + "%" + "<hr>");
   $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/windIcon.png'/>" + "    " + response.wind.speed + " mph" + "<hr>");
   $(".weather-drop").append("<img style='height: 30px; width: 40px; margin-right: 5px' src='assets/images/sunriseIcon.png'/>" + "    " + response.sys.sunrise + "  /  ");
   $(".weather-drop").append("<img style='height: 30px; width: 35px; margin-right: 5px' src='assets/images/sunsetIcon.png'/>" + "    " + response.sys.sunset + "<hr>");
+
 }); // End ajax
 } // End getWeather ------------------------------------------------------
 
@@ -126,7 +128,6 @@ $("#submit-button").on("click", function(event) {
     } else {
       $("#city-input").addClass("error");
       $("#zipcode-input").addClass("error");
-      alert("You must enter a location.");
       // Materialize.toast(message, displayLength, className, completeCallback);
       Materialize.toast('You must enter your location.', 100000); // 4000 is the duration of the toast
       return;
@@ -147,17 +148,23 @@ function displayMessages(messages) {
 }
 
 // Check database and display comments -----------------------------------------
+function displayComments() {
 
-database.ref().on("child_added", function(dataSnapshot) {
-  var username = dataSnapshot.val().username;
-  var comment = dataSnapshot.val().comment; 
-  console.log("User: " + username);
-
-  var commentDiv = $("<div>");
-  var commentParagraph = $("<p>" + username + ": " + comment + "</p>");
-  commentDiv.append(commentParagraph);
-  $(".chatroom-drop").prepend(commentDiv);
-}); //End display comments --------------------------------------------------
+  database.ref().on("child_added", function(dataSnapshot) {
+    // $(".chatroom-drop").empty();
+    var location =dataSnapshot.val().location;
+    var username = dataSnapshot.val().username;
+    var comment = dataSnapshot.val().comment; 
+    console.log("Location: " + location + "City: " + cityName);
+    
+    if (location === cityName) {
+      var commentDiv = $("<div>");
+      var commentParagraph = $("<p>" + username + ": " + comment + "</p>");
+      commentDiv.append(commentParagraph);
+      $(".chatroom-drop").prepend(commentDiv);
+    }
+  }); 
+} //End display comments --------------------------------------------------
 
 // Submit comment -------------------------------------------------------------
 $("#send-chat-button").on("click", function(event) {
@@ -170,10 +177,7 @@ $("#send-chat-button").on("click", function(event) {
     username: usernameInput,
     comment: userComment,
     location: cityName,
-    // commentTime: currentMoment
   });
-// }, function(errorObject) {
-//   console.log("The read failed: " + errorObject.code);
 }); // End submit comment -----------------------------------------------------
 
 // Function to set media to weather condition --------------------------------------
