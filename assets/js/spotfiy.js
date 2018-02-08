@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Spotify Web</title>
-  <script
-  src="http://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-</head>
-<body>
-  
+//opening the spotify player 
 
-  <button id="pause">Pause</button>
-  <div id="info"></div>
-  <script src="https://sdk.scdn.co/spotify-player.js"></script>
-  <script>
     window.onSpotifyWebPlaybackSDKReady = () => {
       const token = 'BQD0tOgink0a4creLcwh7hwtCJmPNAyt9putXvHRmfQJpMzGlRB6Pr6IvaE78G3DKWJggvVGNSYXMqhetMc_TY7y_GyX2HYwdLnIH5J7ylzr74MaCVi6G6bZEER40IFxI7hSS96Tmi6-4OWa0CmaR4Nt4KURa4nGj-hUI6hmDW8';
       const player = new Spotify.Player({
@@ -54,7 +40,7 @@
         // $.ajax(settings).done(function (response) {
         //   console.log(response);
         // });
-        
+// pulling the ajax info for the spotify player 
               var info = {
                 url: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
                 method: "PUT",
@@ -132,8 +118,3 @@
         }
       })
     };
-
-
-    </script>
-  </body>
-  </html>
