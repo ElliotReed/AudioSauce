@@ -1,4 +1,5 @@
 //opening the spotify player 
+var device_id;
 
     window.onSpotifyWebPlaybackSDKReady = () => {
       const token = spotifyAccessToken;
@@ -25,7 +26,7 @@
 
       // Ready
       player.on('ready', data => {
-        let { device_id } = data;
+        device_id = data.device_id;
         console.log('Ready with Device ID', device_id);
 
         spotifyLoaded = true;
