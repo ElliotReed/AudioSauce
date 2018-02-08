@@ -28,6 +28,8 @@
         let { device_id } = data;
         console.log('Ready with Device ID', device_id);
 
+        spotifyLoaded = true;
+
         // var settings = {
         //   "async": true,
         //   "crossDomain": true,
@@ -45,18 +47,6 @@
         //   console.log(response);
         // });
 // pulling the ajax info for the spotify player 
-              var info = {
-                url: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
-                method: "PUT",
-                headers: {"Authorization": "Bearer "+token},
-                data: JSON.stringify({"context_uri": "spotify:user:1223107505:playlist:" + currentPlaylistID })
-              };
-
-                  $.ajax(info).done(function (a,b,c,d) {
-                    console.log(a,b,c,d);
-                  }).fail(function(a,b,c,d) {
-                    console.log(a,b,c,d);
-                  });
 
                 
 
@@ -124,3 +114,27 @@
         }
       })
     };
+
+
+checkToPlay();
+
+
+function checkToPlay() {
+  if (spotifyLoaded && weatherLoaded) {
+    // play music
+    var info = {
+      url: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
+      method: "PUT",
+      headers: {"Authorization": "Bearer "+token},
+      data: JSON.stringify({"context_uri": "spotify:user:1223107505:playlist:" + currentPlaylistID })
+    };
+
+        $.ajax(info).done(function (a,b,c,d) {
+          console.log(a,b,c,d);
+        }).fail(function(a,b,c,d) {
+          console.log(a,b,c,d);
+        });
+  } else {
+    setTimeout(checkToPlay, 500);
+  }
+}
