@@ -93,67 +93,65 @@
 
     </div>
 
-<!-- COLLAPSABLE LEFT -->
-
+    <!-- COLLAPSABLE LEFT -->
 
     <div class="uk-offcanvas-content">
 
         <!-- The whole page content goes here -->
         <div id="offcanvas-usage-left" uk-offcanvas="flip: true">
-            <div class="uk-offcanvas-bar">
+            <div class="uk-offcanvas-bar" id="right-bar">
 
                 <button class="uk-offcanvas-close" type="button" uk-close></button>
 
-            <section class="weather-panel">
-                <div>
-                    <h3 id="weather-welcome-text"><span id="city-name2"></span>'s<br>current weather:</h3>
+                <section class="weather-panel">
                     <div>
-                        <img id="sunshine" width=20% height=20% src="assets/images/sunIcon.gif"/><!-- add city name through javascript -->
+                        <h3 id="weather-welcome-text"><span id="city-name2"></span>'s<br>current weather:</h3>
+                        <div>
+                            <img id="sunshine" width=20% height=20% src="assets/images/sunIcon.gif"/><!-- add city name through javascript -->
+                        </div>
                     </div>
-                </div>
-                    <br>
-                <div class="weather-drop">
-            
-                </div>
-            </section>
+                        <br>
+                    <div class="weather-drop">
+                
+                    </div>
+                </section>
 
             </div>
         </div>
     </div>
 
     <!-- COLLAPSABLE RIGHT -->
+
     <div class="uk-offcanvas-content">
 
         <!-- The whole page content goes here -->
         <div id="offcanvas-usage-right" uk-offcanvas>
-            <div class="uk-offcanvas-bar">
+            <div class="uk-offcanvas-bar" id="left-bar">
 
                 <button class="uk-offcanvas-close" type="button" uk-close></button>
 
-            <section class="chat-panel">
-                <div>
-                    <h3 id="chat-welcome-text">Welcome to the <span id="city-name">your city</span> chat!</h3> <!-- add city name through javascript -->
-                </div>
-                <div class="chatroom-drop">
-                    <p>
-                    </p>
-                </div>
-                <div>
-                    <label id="" for="username-input">What's on your mind?</label>
-                        <br>
-                    <section class="user-chat">
-                        <div class="row">
-                            <div class="col s9">
-                                <input type="text" id="chatroom-textbox" aria-describedby="emailHelp" placeholder=". . .">
+                <section class="chat-panel">
+                    <div>
+                        <h3 id="chat-welcome-text">Welcome to the <span id="city-name">your city</span> chat!</h3> <!-- add city name through javascript -->
+                    </div>
+                    <div class="chatroom-drop">
+                    </div>
+                    <div>
+                        <label id="" for="username-input">What's on your mind?</label>
+                            <br>
+                        <section class="user-chat">
+                            <div class="row">
+                                <div class="col s9">
+                                    <input type="text" id="chatroom-textbox" aria-describedby="emailHelp" placeholder=". . .">
+                                </div>
+                                <div class="col s3">
+                                    <button id="send-chat-button" type="submit" class="btn btn-primary">Send</button>
+                                </div>
                             </div>
-                            <div class="col s3">
-                                <button id="send-chat-button" type="submit" class="btn btn-primary">Send</button>
-                            </div>
-                        </div>
-                    </section>
-                        <br>
-                </div>
-            </section>
+                        </section>
+                            <br>
+                    </div>
+                </section>
 
             </div>
         </div>
@@ -169,7 +167,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.js"></script>
     <!-- personal js -->
     <script src="assets/js/app.js"></script>
-     <script src="assets/js/spotify.js"></script>
+    <script src="assets/js/spotify.js"></script>
     
 </body>
 </html>
