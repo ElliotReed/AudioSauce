@@ -350,11 +350,11 @@ form {
 #left-bar {
 	border-right: solid;
     border-color: #2b2b2b;
-    border-width: 2px;
+    border-width: 5px;
 }
 
 #right-bar {
 	border-left: solid;
     border-color: #2b2b2b;
-    border-width: 2px;
+    border-width: 5px;
 }
