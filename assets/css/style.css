@@ -346,3 +346,15 @@ form {
     width: 15%;
     border: none;
 }
+
+#left-bar {
+	border-right: solid;
+    border-color: #2b2b2b;
+    border-width: 2px;
+}
+
+#right-bar {
+	border-left: solid;
+    border-color: #2b2b2b;
+    border-width: 2px;
+}
