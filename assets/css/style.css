@@ -347,6 +347,22 @@ form {
     border: none;
 }
 
+#play:hover {
+	opacity: 0.5;
+}
+
+#pause:hover {
+	opacity: 0.5;
+}
+
+#next:hover {
+	opacity: 0.5;
+}
+
+#previous:hover {
+	opacity: 0.5;
+}
+
 #left-bar {
 	border-right: solid;
     border-color: #2b2b2b;
