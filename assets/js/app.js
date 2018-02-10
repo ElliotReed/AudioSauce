@@ -147,8 +147,8 @@ $("#submit-button").on("click", function(event) {
   // Successfull! close opening screen and get weather
   $(".information-input").addClass("scale-out");
   setTimeout(function(){  
-    $(".information-input").addClass("displayNone")
-    $(".music-box").addClass("scale-in")
+    $(".information-input").addClass("displayNone");
+    $(".music-box").addClass("scale-in");
   }, 500);
 
 
@@ -284,4 +284,4 @@ function parseQueryString( queryString ) {
         params[temp[0]] = temp[1];
     }
     return params;
-};
+}
